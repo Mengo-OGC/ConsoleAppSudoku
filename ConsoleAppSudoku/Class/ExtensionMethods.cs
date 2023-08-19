@@ -25,8 +25,13 @@ namespace ConsoleAppSudoku.Class
 
         public static void AssegnaNumeri(this Cell[,] mat, Cell cell, int n)
         {
-            if (ControlloAntiOrario(mat, cell, n)) // todo: aggiungere controllo nei rettangoli
+            if (ControlloAntiOrario(mat, cell, n) && ControlloVicinato)
                 cell.Add(n);
+        }
+
+        private static bool ControlloVicinato(Cell[,] mat, Cell cell, int n)
+        {
+
         }
 
         private static bool ControlloAntiOrario(Cell[,] mat, Cell cell, int n)
