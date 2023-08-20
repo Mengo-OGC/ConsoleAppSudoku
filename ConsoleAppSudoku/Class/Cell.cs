@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppSudoku.Class
 {
-    public class Cell : Cordinate
+    public class Cell : ValoreNoto
     {
         private List<int?> _valoriPossibili = new List<int?>();
-
-        public int? Valore { get; set; }
 
         public void Add(int val)
         {
@@ -47,9 +45,8 @@ namespace ConsoleAppSudoku.Class
             _valoriPossibili = val;
         }
 
-        public Cell(int r, int c, int n) : this(r, c)
+        public Cell(int r, int c, int n) : base(r, c, n)
         {
-            Valore = n;
         }
 
         public Cell()

@@ -29,7 +29,7 @@ namespace ConsoleAppSudoku.Class
                 cell.Add(n);
         }
 
-        private static bool ControlloVicinato(Cell[,] mat, Cell cell, int n)
+        private static bool ControlloVicinato(ValoreNoto[,] mat, int n)
         {
 
         }

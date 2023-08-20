@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppSudoku.Class
 {
-    public class Sudoku : IEnumerable<Cell>
+    public class Sudoku : Dimensioni, IEnumerable<Cell>
     {
         private Cell[,] _matrix;
-        private int _row, _col;
+        private SuperCell[,] _matrixValoriNoti;
 
         #region interfacce
         public IEnumerator<Cell> GetEnumerator()
@@ -56,25 +56,27 @@ namespace ConsoleAppSudoku.Class
 
         #region costruttori
 
-        public Sudoku() : this (9) { }
+        public Sudoku() : this (9, 3) { }
 
 
-        public Sudoku(int d) : this(d, d)
+        public Sudoku(int d, int dSuperCell) : this(d, d, dSuperCell, dSuperCell)
         {
 
         }
 
-        public Sudoku(int r, int c)
+        public Sudoku(int r, int c, int rSC, int cSC)
         {
             _matrix = new Cell[r, c];
+            _matrixValoriNoti = new SuperCell[rSC, cSC];
 
-            _row = r;
-            _col = c;
+            Righe = r;
+            Colonne = c;
 
-            for (int i = 0; i < _row; i++)
-                for (int j = 0; j < _col; j++)
+            for (int i = 0; i < Righe; i++)
+                for (int j = 0; j < Colonne; j++)
                     _matrix[i, j] = new Cell(i, j);
         }
+
         public Sudoku(Cell[,] mat)
         {
             _matrix = mat;
@@ -91,12 +93,12 @@ namespace ConsoleAppSudoku.Class
         #region metodi
         private void Riempi()
         {
-            for (int i = 0; i < _row; i++)
-                for (int j = 0; j < _col; j++)
+            for (int i = 0; i < Righe; i++)
+                for (int j = 0; j < Colonne; j++)
                 {
                     Cell c = _matrix[i, j];
                     if (c.Valore == null)
-                        for (int k = 1; k <= _row; k++)
+                        for (int k = 1; k <= Righe; k++)
                             _matrix.AssegnaNumeri(c, k);
                 }
         }
@@ -107,8 +109,8 @@ namespace ConsoleAppSudoku.Class
             do
             {
                 continua = 0;
-                for (int i = 0; i < _row; i++)
-                    for (int j = 0; j < _col; j++)
+                for (int i = 0; i < Righe; i++)
+                    for (int j = 0; j < Colonne; j++)
                     {
                         Cell c = _matrix[i, j];
                         if (c.NumeriPossibili == 1 && c.Valore ==  null)
@@ -124,10 +126,10 @@ namespace ConsoleAppSudoku.Class
 
         public int?[,] ToIntMatrix()
         {
-            int?[,] mat = new int?[_row, _col];
+            int?[,] mat = new int?[Righe, Colonne];
 
-            for (int i = 0; i < _row; i++)
-                for (int j = 0; j < _col; j++)
+            for (int i = 0; i < Righe; i++)
+                for (int j = 0; j < Colonne; j++)
                     mat[i, j] = _matrix[i, j].Valore;
 
             return mat;
@@ -137,10 +139,10 @@ namespace ConsoleAppSudoku.Class
         {
             string s = "";
 
-            for (int i = 0; i < _row; i++)
+            for (int i = 0; i < Righe; i++)
             {
-                for (int j = 0; j < _col; j++)
-                    s += this[i, j].FormattaInStringa(_row) + " ";
+                for (int j = 0; j < Colonne; j++)
+                    s += this[i, j].FormattaInStringa(Righe) + " ";
                 s += "\n";
             }
 

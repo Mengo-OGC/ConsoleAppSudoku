@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppSudoku.Class
 {
-    internal class Dimensioni
+    public class Dimensioni
     {
+        public int Righe { get; set; }
+        public int Colonne { get; set; }
     }
 }
