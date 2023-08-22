@@ -23,15 +23,10 @@ namespace ConsoleAppSudoku.Class
             }
         }
 
-        public static void AssegnaNumeri(this Cell[,] mat, Cell cell, int n)
+        public static void AssegnaNumeri(this Cell[,] mat, SuperCell superCell, Cell cell, int n)
         {
-            if (ControlloAntiOrario(mat, cell, n) && ControlloVicinato)
+            if (ControlloAntiOrario(mat, cell, n) && superCell.ValorePresente(n))
                 cell.Add(n);
-        }
-
-        private static bool ControlloVicinato(ValoreNoto[,] mat, int n)
-        {
-
         }
 
         private static bool ControlloAntiOrario(Cell[,] mat, Cell cell, int n)

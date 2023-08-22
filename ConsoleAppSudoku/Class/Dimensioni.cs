@@ -10,5 +10,11 @@ namespace ConsoleAppSudoku.Class
     {
         public int Righe { get; set; }
         public int Colonne { get; set; }
+
+        public Dimensioni(int r, int c)
+        {
+            Righe = r;
+            Colonne = c;
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace ConsoleAppSudoku.Class
     {
         private Cell[,] _matrix;
         private SuperCell[,] _matrixValoriNoti;
+        private int numeroCelleVerticale, numeroCelleOrrizontale;
 
         #region interfacce
         public IEnumerator<Cell> GetEnumerator()
@@ -55,31 +57,37 @@ namespace ConsoleAppSudoku.Class
         #endregion
 
         #region costruttori
-
         public Sudoku() : this (9, 3) { }
 
+        public Sudoku(int d, int dSuperCell) : this(d, d, dSuperCell, dSuperCell) { }
 
-        public Sudoku(int d, int dSuperCell) : this(d, d, dSuperCell, dSuperCell)
-        {
-
-        }
-
-        public Sudoku(int r, int c, int rSC, int cSC)
+        public Sudoku(int r, int c, int rSC, int cSC) : base(r, c)
         {
             _matrix = new Cell[r, c];
-            _matrixValoriNoti = new SuperCell[rSC, cSC];
-
-            Righe = r;
-            Colonne = c;
 
             for (int i = 0; i < Righe; i++)
                 for (int j = 0; j < Colonne; j++)
                     _matrix[i, j] = new Cell(i, j);
+
+            _matrixValoriNoti = new SuperCell[rSC, cSC];
+
+            for (int i = 0; i < rSC; i++)
+                for (int j = 0; j < cSC; j++)
+                    _matrixValoriNoti[i, j] = new SuperCell();
+
+            numeroCelleVerticale = rSC;
+            numeroCelleOrrizontale = cSC;
         }
 
-        public Sudoku(Cell[,] mat)
+        public Sudoku(Cell[,] mat, SuperCell[,] matSC) 
+            : 
+            base (mat.GetLength(0), mat.GetLength(1))
         {
             _matrix = mat;
+            _matrixValoriNoti = matSC;
+
+            numeroCelleVerticale = matSC.GetLength(0);
+            numeroCelleOrrizontale = matSC.GetLength(1);
         }
         #endregion
 
@@ -91,6 +99,14 @@ namespace ConsoleAppSudoku.Class
         }
 
         #region metodi
+        public void AggiungiNumero(int r, int c, int val)
+        {
+            this[r, c].Valore = val;
+
+            _matrixValoriNoti
+                [r / numeroCelleVerticale, c / numeroCelleOrrizontale].Add(val);
+        }
+
         private void Riempi()
         {
             for (int i = 0; i < Righe; i++)
@@ -99,7 +115,7 @@ namespace ConsoleAppSudoku.Class
                     Cell c = _matrix[i, j];
                     if (c.Valore == null)
                         for (int k = 1; k <= Righe; k++)
-                            _matrix.AssegnaNumeri(c, k);
+                            _matrix.AssegnaNumeri(_matrixValoriNoti[i / numeroCelleVerticale, j / numeroCelleOrrizontale], c, k);
                 }
         }
 

@@ -84,17 +84,17 @@ namespace ConsoleAppSudoku
             */
 
             // todo: togliere, solo per test:
-            sudoku[0, 0].Valore = 1;
-            sudoku[0, 2].Valore = 2;
-            sudoku[1, 2].Valore = 3;
-            sudoku[2, 8].Valore = 4;
-            sudoku[3, 1].Valore = 4;
-            sudoku[3, 4].Valore = 5;
-            sudoku[4, 1].Valore = 6;
-            sudoku[4, 4].Valore = 7;
-            sudoku[5, 7].Valore = 2;
-            sudoku[6, 1].Valore = 8;
-            sudoku[8, 6].Valore = 8;
+            sudoku.AggiungiNumero(0, 0, 1);
+            sudoku.AggiungiNumero(0, 2, 2);
+            sudoku.AggiungiNumero(1, 2, 3);
+            sudoku.AggiungiNumero(2, 8, 4);
+            sudoku.AggiungiNumero(3, 1, 4);
+            sudoku.AggiungiNumero(3, 4, 5);
+            sudoku.AggiungiNumero(4, 1, 6);
+            sudoku.AggiungiNumero(4, 4, 7);
+            sudoku.AggiungiNumero(5, 7, 2);
+            sudoku.AggiungiNumero(6, 1, 8);
+            sudoku.AggiungiNumero(8, 6, 8);
 
             DateTime inizio = DateTime.Now;
             sudoku.Risolvi();

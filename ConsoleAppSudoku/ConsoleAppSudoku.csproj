@@ -49,7 +49,6 @@
     <Compile Include="Class\ExtensionMethods.cs" />
     <Compile Include="Class\Sudoku.cs" />
     <Compile Include="Class\SuperCell.cs" />
-    <Compile Include="Class\ValoreNoto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

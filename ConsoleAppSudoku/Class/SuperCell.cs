@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppSudoku.Class
 {
-    public class SuperCell : IEnumerable<int>
+    public class SuperCell
     {
         private List<int> _matrixNota;
 
+        #region metodi
         public void Add(int v)
         {
             _matrixNota.Add(v);
@@ -20,6 +21,22 @@ namespace ConsoleAppSudoku.Class
         {
             _matrixNota.Remove(v);
         }
+
+        public bool ValorePresente(int v)
+        {
+            if (_matrixNota.Contains(v))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void Controllo(int i)
+        {
+            if (i < 0 || i >= _matrixNota.Count)
+                throw new Exception("Error");
+        }
+        #endregion
 
         public int this[int i]
         {
@@ -33,24 +50,6 @@ namespace ConsoleAppSudoku.Class
                 Controllo(i);
                 _matrixNota[i] = value;
             }
-        }
-
-        public IEnumerator<int> GetEnumerator()
-        {
-            foreach (int v in _matrixNota)
-                yield return v;
-        }
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
-
-        private void Controllo(int i)
-        {
-            if (i < 0
-                    ||
-                    i >= _matrixNota.Count)
-                throw new Exception("Error");
         }
 
         public SuperCell()
