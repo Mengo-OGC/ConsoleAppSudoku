@@ -95,12 +95,15 @@ namespace ConsoleAppSudoku.Class
         public void Risolvi()
         {
             Riempi();
-            //Semplifica();
+            Semplifica();
         }
 
         #region metodi
         public void AggiungiNumero(int r, int c, int val)
         {
+            r--;
+            c--;
+
             this[r, c].Valore = val;
 
             _matrixValoriNoti

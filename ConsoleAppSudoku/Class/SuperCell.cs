@@ -26,9 +26,9 @@ namespace ConsoleAppSudoku.Class
         {
             if (_matrixNota.Contains(v))
             {
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
 
         private void Controllo(int i)
