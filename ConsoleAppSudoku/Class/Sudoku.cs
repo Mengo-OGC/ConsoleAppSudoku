@@ -84,7 +84,7 @@ namespace ConsoleAppSudoku.Class
                     Cell c = _matrix.OttieniCellaNonProtetta(i, j);
                     if (c.Valore == null)
                         for (int k = 1; k <= NumeroCelle; k++)
-                            _matrix.AssegnaNumeri(_matrix[i / NumeroCelle, j / NumeroCelle], c, k);
+                            _matrix.AssegnaNumeri(c, k);
                 }
         }
 

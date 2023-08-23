@@ -34,21 +34,23 @@ namespace ConsoleAppSudoku.Class
 
         private static bool ControlloAntiOrario(SuperCell[,] mat, Cell cell, int n)
         {
-            int i;
+            int i, lunghezza = (int)Math.Pow(mat.GetLength(0), 2);
 
+            // orizzontale
             for (i = 0; i < cell.Colonna; i++)
                 if (mat.OttieniCellaNonProtetta(cell.Riga, i).Valore == n)
                     return false;
 
-            for (i = cell.Colonna + 1; i < mat.GetLength(0); i++)
+            for (i = cell.Colonna + 1; i < lunghezza; i++)
                 if (mat.OttieniCellaNonProtetta(cell.Riga, i).Valore == n)
                     return false;
 
+            // verticale
             for (i = 0; i < cell.Riga; i++)
                 if (mat.OttieniCellaNonProtetta(i, cell.Colonna).Valore == n)
                     return false;
 
-            for (i = cell.Colonna + 1; i < mat.GetLength(1); i++)
+            for (i = cell.Riga + 1; i < lunghezza; i++)
                 if (mat.OttieniCellaNonProtetta(i, cell.Colonna).Valore == n)
                     return false;
 
@@ -59,8 +61,8 @@ namespace ConsoleAppSudoku.Class
         public static bool Contains(this SuperCell mat, int v)
         {
             foreach(Cell c in mat)
-                if (c.Valore == v) return true;
-            return false;
+                if (c.Valore == v) return false;
+            return true;
         }
 
         public static bool ControlloDimensioni(this Cell[,] mat, int r, int c)
