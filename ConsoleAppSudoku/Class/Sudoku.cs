@@ -1,96 +1,65 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ConsoleAppSudoku.Class
 {
-    public class Sudoku : Dimensioni, IEnumerable<Cell>
+    public class Sudoku
     {
-        private Cell[,] _matrix;
-        private SuperCell[,] _matrixValoriNoti;
-        private int numeroCelleVerticale, numeroCelleOrrizontale;
-
-        #region interfacce
-        public IEnumerator<Cell> GetEnumerator()
-        {
-            foreach (Cell c in _matrix)
-                yield return c;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-        #endregion
+        private SuperCell[,] _matrix;
 
         #region proprietà
-        public Cell this[int r, int c]
+        private int NumeroCelle { get; set; }
+        private int NumeroSuperCelle { get; set; }
+
+        public SuperCell this[int r, int c]
         {
             get
             {
-                Controllo(r, c);
-                return _matrix[r, c];
+                if(_matrix.ControlloDimensioni(r, c))
+                    return _matrix[r, c];
+                return null;
             }
             set
             {
-                Controllo(r, c);
-                _matrix[r, c] = value;
+                if (_matrix.ControlloDimensioni(r, c))
+                    _matrix[r, c] = value;
             }
         }
-
-        private void Controllo(int r, int c)
-        {
-            if (r < 0
-                    ||
-                    r >= _matrix.GetLength(0)
-                    ||
-                    c < 0
-                    ||
-                    c >= _matrix.GetLength(1))
-                throw new Exception("Error");
-        }
-
         #endregion
 
         #region costruttori
-        public Sudoku() : this (9, 3) { }
+        public Sudoku() : this (3) { }
 
-        public Sudoku(int d, int dSuperCell) : this(d, d, dSuperCell, dSuperCell) { }
-
-        public Sudoku(int r, int c, int rSC, int cSC) : base(r, c)
+        public Sudoku(int d)
         {
-            _matrix = new Cell[r, c];
+            NumeroCelle = d * d;
+            NumeroSuperCelle = d;
 
-            for (int i = 0; i < Righe; i++)
-                for (int j = 0; j < Colonne; j++)
-                    _matrix[i, j] = new Cell(i, j);
+            _matrix = new SuperCell[d, d];
 
-            _matrixValoriNoti = new SuperCell[rSC, cSC];
+            for (int i = 0; i < d; i++)
+                for (int j = 0; j < d; j++)
+                    _matrix[i, j] = new SuperCell(d);
 
-            for (int i = 0; i < rSC; i++)
-                for (int j = 0; j < cSC; j++)
-                    _matrixValoriNoti[i, j] = new SuperCell();
-
-            numeroCelleVerticale = rSC;
-            numeroCelleOrrizontale = cSC;
-        }
-
-        public Sudoku(Cell[,] mat, SuperCell[,] matSC) 
-            : 
-            base (mat.GetLength(0), mat.GetLength(1))
-        {
-            _matrix = mat;
-            _matrixValoriNoti = matSC;
-
-            numeroCelleVerticale = matSC.GetLength(0);
-            numeroCelleOrrizontale = matSC.GetLength(1);
+            int riga, colonna;
+            for (int R = 0; R < d; R++)
+                for (int C = 0; C < d; C++)
+                    for (int r = 0; r < d; r++)
+                        for (int c = 0; c < d; c++)
+                        {
+                            riga = R * d + r;
+                            colonna = C * d + c;
+                            _matrix[R, C][r, c] = new Cell(riga, colonna);
+                        }
         }
         #endregion
-
 
         public void Risolvi()
         {
@@ -104,21 +73,18 @@ namespace ConsoleAppSudoku.Class
             r--;
             c--;
 
-            this[r, c].Valore = val;
-
-            _matrixValoriNoti
-                [r / numeroCelleVerticale, c / numeroCelleOrrizontale].Add(val);
+            this[r / NumeroSuperCelle, c / NumeroSuperCelle][r % NumeroSuperCelle, c % NumeroSuperCelle].Valore = val;
         }
 
         private void Riempi()
         {
-            for (int i = 0; i < Righe; i++)
-                for (int j = 0; j < Colonne; j++)
+            for (int i = 0; i < NumeroCelle; i++)
+                for (int j = 0; j < NumeroCelle; j++)
                 {
-                    Cell c = _matrix[i, j];
+                    Cell c = _matrix.OttieniCellaNonProtetta(i, j);
                     if (c.Valore == null)
-                        for (int k = 1; k <= Righe; k++)
-                            _matrix.AssegnaNumeri(_matrixValoriNoti[i / numeroCelleVerticale, j / numeroCelleOrrizontale], c, k);
+                        for (int k = 1; k <= NumeroCelle; k++)
+                            _matrix.AssegnaNumeri(_matrix[i / NumeroCelle, j / NumeroCelle], c, k);
                 }
         }
 
@@ -128,10 +94,10 @@ namespace ConsoleAppSudoku.Class
             do
             {
                 continua = 0;
-                for (int i = 0; i < Righe; i++)
-                    for (int j = 0; j < Colonne; j++)
+                for (int i = 0; i < NumeroCelle; i++)
+                    for (int j = 0; j < NumeroCelle; j++)
                     {
-                        Cell c = _matrix[i, j];
+                        Cell c = _matrix.OttieniCellaNonProtetta(i, j);
                         if (c.NumeriPossibili == 1 && c.Valore ==  null)
                         {
                             _matrix.UnicizzaRigaColonna(c);
@@ -143,25 +109,14 @@ namespace ConsoleAppSudoku.Class
         }
         #endregion
 
-        public int?[,] ToIntMatrix()
-        {
-            int?[,] mat = new int?[Righe, Colonne];
-
-            for (int i = 0; i < Righe; i++)
-                for (int j = 0; j < Colonne; j++)
-                    mat[i, j] = _matrix[i, j].Valore;
-
-            return mat;
-        }
-
         public override string ToString()
         {
             string s = "";
 
-            for (int i = 0; i < Righe; i++)
+            for (int i = 0; i < NumeroCelle; i++)
             {
-                for (int j = 0; j < Colonne; j++)
-                    s += this[i, j].FormattaInStringa(Righe) + " ";
+                for (int j = 0; j < NumeroCelle; j++)
+                    s += _matrix.OttieniCellaNonProtetta(i, j).FormattaInStringa(NumeroCelle) + " ";
                 s += "\n";
             }
 

@@ -7,60 +7,67 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppSudoku.Class
 {
-    public class SuperCell
+    public class SuperCell : IEnumerable<Cell>
     {
-        private List<int> _matrixNota;
+        private Cell[,] _matrix;
 
         #region metodi
-        public void Add(int v)
+        public void Add(int r, int c, int v)
         {
-            _matrixNota.Add(v);
+            if (_matrix.ControlloDimensioni(r, c))
+                _matrix[r, c].Valore = v;
         }
 
-        public void Remove(int v)
+        public void Remove(int r, int c, int v)
         {
-            _matrixNota.Remove(v);
-        }
-
-        public bool ValorePresente(int v)
-        {
-            if (_matrixNota.Contains(v))
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private void Controllo(int i)
-        {
-            if (i < 0 || i >= _matrixNota.Count)
-                throw new Exception("Error");
+            if (_matrix.ControlloDimensioni(r, c))
+                _matrix[r, c].Remove(v);
         }
         #endregion
 
-        public int this[int i]
+        #region interfaccie
+        public IEnumerator<Cell> GetEnumerator()
+        {
+            foreach (Cell c in _matrix)
+                yield return c;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        #endregion
+
+        public Cell this[int i, int j]
         {
             get
             {
-                Controllo(i);
-                return _matrixNota[i];
+                if (_matrix.ControlloDimensioni(i, j))
+                    return _matrix[i, j];
+                return null;
             }
             set
             {
-                Controllo(i);
-                _matrixNota[i] = value;
+                if (_matrix.ControlloDimensioni(i, j))
+                    _matrix[i, j] = value;
             }
         }
 
-        public SuperCell()
+        #region costruttori
+        public SuperCell() : this (3)
         {
-            _matrixNota = new List<int>();
+            
         }
 
-        public SuperCell(List<int> mat)
+        public SuperCell(int d)
         {
-            _matrixNota = mat;
+            _matrix = new Cell[d,d];
         }
 
+        public SuperCell(Cell[,] mat)
+        {
+            _matrix = mat;
+        }
+        #endregion
     }
 }

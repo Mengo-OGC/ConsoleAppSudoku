@@ -11,9 +11,9 @@ namespace ConsoleAppSudoku.Class
     public class Cell : Cordinate
     {
         private List<int?> _valoriPossibili = new List<int?>();
-
         public int? Valore { get; set; }
 
+        #region metodi
         public void Add(int val)
         {
             _valoriPossibili.Add(val);
@@ -32,31 +32,6 @@ namespace ConsoleAppSudoku.Class
             _valoriPossibili.Remove(val);
         }
 
-        public  int NumeriPossibili
-        {
-            get
-            {
-                return _valoriPossibili.Count;
-            }
-        }
-
-        public Cell(int r, int c) :base(r, c) { }
-        
-        public Cell(int r, int c, List<int?> val) : this(r, c)
-        {
-            _valoriPossibili = val;
-        }
-
-        public Cell(int r, int c, int n) : base(r, c)
-        {
-            Valore = n;
-        }
-
-        public Cell()
-        {
-            
-        }
-
         public string FormattaInStringa(int l)
         {
             string s;
@@ -70,5 +45,32 @@ namespace ConsoleAppSudoku.Class
 
             return s;
         }
+        #endregion
+
+        public int NumeriPossibili
+        {
+            get
+            {
+                return _valoriPossibili.Count;
+            }
+        }
+
+        #region costruttori
+        public Cell(int r, int c, List<int?> val) : this(r, c)
+        {
+            _valoriPossibili = val;
+        }
+        public Cell(int r, int c, int n) : this(r, c)
+        {
+            Valore = n;
+        }
+
+        public Cell(int r, int c) : base(r, c) { }
+
+        public Cell()
+        {
+            
+        }
+        #endregion
     }
 }
