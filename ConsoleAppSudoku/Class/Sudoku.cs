@@ -64,7 +64,7 @@ namespace ConsoleAppSudoku.Class
         public void Risolvi()
         {
             Riempi();
-            Semplifica();
+            //Semplifica();
         }
 
         #region metodi

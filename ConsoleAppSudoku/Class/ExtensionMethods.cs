@@ -21,6 +21,8 @@ namespace ConsoleAppSudoku.Class
                 if (i != cell.Colonna)
                     mat.OttieniCellaNonProtetta(i, cell.Colonna).Remove(cell.Valore);
             }
+
+            //for (int r = 0; ) // todo: cancellazione per cella
         }
 
         public static void AssegnaNumeri(this SuperCell[,] mat, Cell cell, int n)
@@ -63,6 +65,11 @@ namespace ConsoleAppSudoku.Class
             foreach(Cell c in mat)
                 if (c.Valore == v) return false;
             return true;
+        }
+
+        public static void Clear(this SuperCell mat, int v)
+        {
+            //for (int i = 0; i < )
         }
 
         public static bool ControlloDimensioni(this Cell[,] mat, int r, int c)

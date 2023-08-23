@@ -11,20 +11,6 @@ namespace ConsoleAppSudoku.Class
     {
         private Cell[,] _matrix;
 
-        #region metodi
-        public void Add(int r, int c, int v)
-        {
-            if (_matrix.ControlloDimensioni(r, c))
-                _matrix[r, c].Valore = v;
-        }
-
-        public void Remove(int r, int c, int v)
-        {
-            if (_matrix.ControlloDimensioni(r, c))
-                _matrix[r, c].Remove(v);
-        }
-        #endregion
-
         #region interfaccie
         public IEnumerator<Cell> GetEnumerator()
         {

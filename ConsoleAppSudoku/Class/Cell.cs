@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppSudoku.Class
 {
-    public class Cell : Cordinate
+    public class Cell
     {
         private List<int?> _valoriPossibili = new List<int?>();
         public int? Valore { get; set; }
+        public int Colonna { get; set; }
+        public int Riga { get; set; }
 
         #region metodi
         public void Add(int val)
@@ -65,7 +67,11 @@ namespace ConsoleAppSudoku.Class
             Valore = n;
         }
 
-        public Cell(int r, int c) : base(r, c) { }
+        public Cell(int r, int c)
+        {
+            Riga = r;
+            Colonna = c;
+        }
 
         public Cell()
         {

@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\Cell.cs" />
-    <Compile Include="Class\Cordinate.cs" />
     <Compile Include="Class\ExtensionMethods.cs" />
     <Compile Include="Class\Sudoku.cs" />
     <Compile Include="Class\SuperCell.cs" />
