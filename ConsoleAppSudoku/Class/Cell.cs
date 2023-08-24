@@ -16,6 +16,11 @@ namespace ConsoleAppSudoku.Class
         public int Riga { get; set; }
 
         #region metodi
+        public bool Contains(int? val)
+        {
+            return _valoriPossibili.Contains(val) ? true : false;
+        }
+
         public void Add(int val)
         {
             _valoriPossibili.Add(val);

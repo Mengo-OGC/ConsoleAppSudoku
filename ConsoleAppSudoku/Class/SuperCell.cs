@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppSudoku.Class
 {
-    public class SuperCell : IEnumerable<Cell>
+    public class SuperCell : Dimensioni, IEnumerable<Cell>
     {
         private Cell[,] _matrix;
 
@@ -45,12 +45,12 @@ namespace ConsoleAppSudoku.Class
             
         }
 
-        public SuperCell(int d)
+        public SuperCell(int d) : base (d)
         {
             _matrix = new Cell[d,d];
         }
 
-        public SuperCell(Cell[,] mat)
+        public SuperCell(Cell[,] mat) : base(mat.GetLength(0))
         {
             _matrix = mat;
         }

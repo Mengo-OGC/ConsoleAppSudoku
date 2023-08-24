@@ -9,7 +9,7 @@ namespace ConsoleAppSudoku.Class
 {
     public static class ExtensionMethods
     {
-        public static void UnicizzaRigaColonna(this SuperCell[,] mat, Cell cell)
+        public static void UnicizzaCella(this SuperCell[,] mat, Cell cell)
         {
             cell.Remove();
 
@@ -22,7 +22,7 @@ namespace ConsoleAppSudoku.Class
                     mat.OttieniCellaNonProtetta(i, cell.Colonna).Remove(cell.Valore);
             }
 
-            //for (int r = 0; ) // todo: cancellazione per cella
+            mat.OttieniSperfCellaNonProtetta(cell.Riga, cell.Colonna).Clear(cell.Valore);
         }
 
         public static void AssegnaNumeri(this SuperCell[,] mat, Cell cell, int n)
@@ -67,9 +67,15 @@ namespace ConsoleAppSudoku.Class
             return true;
         }
 
-        public static void Clear(this SuperCell mat, int v)
+        public static void Clear(this SuperCell mat, int? v)
         {
-            //for (int i = 0; i < )
+            for (int r = 0; r < mat.NumeroCelle; r++)
+                for (int c = 0; c < mat.NumeroCelle; c++)
+                {
+                    Cell cell = mat[r, c];
+                    if (cell.Contains(v))
+                        cell.Remove(v);
+                }
         }
 
         public static bool ControlloDimensioni(this Cell[,] mat, int r, int c)
@@ -99,6 +105,11 @@ namespace ConsoleAppSudoku.Class
         {
             int n = mat.GetLength(0);
             return mat[r / n, c / n][r % n, c % n];
+        }
+        public static SuperCell OttieniSperfCellaNonProtetta(this SuperCell[,] mat, int r, int c)
+        {
+            int n = mat.GetLength(0);
+            return mat[r / n, c / n];
         }
         #endregion
     }

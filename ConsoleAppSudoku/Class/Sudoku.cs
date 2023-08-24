@@ -10,12 +10,11 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppSudoku.Class
 {
-    public class Sudoku
+    public class Sudoku : Dimensioni
     {
         private SuperCell[,] _matrix;
 
         #region proprietà
-        private int NumeroCelle { get; set; }
         private int NumeroSuperCelle { get; set; }
 
         public SuperCell this[int r, int c]
@@ -37,9 +36,8 @@ namespace ConsoleAppSudoku.Class
         #region costruttori
         public Sudoku() : this (3) { }
 
-        public Sudoku(int d)
+        public Sudoku(int d) : base(d * d)
         {
-            NumeroCelle = d * d;
             NumeroSuperCelle = d;
 
             _matrix = new SuperCell[d, d];
@@ -74,9 +72,8 @@ namespace ConsoleAppSudoku.Class
         public void Risolvi()
         {
             Riempi();
-            //Semplifica();
+            Semplifica();
         }
-
 
         private void Riempi()
         {
@@ -102,7 +99,7 @@ namespace ConsoleAppSudoku.Class
                         Cell c = _matrix.OttieniCellaNonProtetta(i, j);
                         if (c.NumeriPossibili == 1 && c.Valore ==  null)
                         {
-                            _matrix.UnicizzaRigaColonna(c);
+                            _matrix.UnicizzaCella(c);
                             continua++;
                         }
                     }
