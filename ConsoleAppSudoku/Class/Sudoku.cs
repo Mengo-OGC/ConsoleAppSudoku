@@ -64,7 +64,7 @@ namespace ConsoleAppSudoku.Class
         public void Risolvi()
         {
             Riempi();
-            //Semplifica();
+            Semplifica();
         }
 
         #region metodi
@@ -109,16 +109,61 @@ namespace ConsoleAppSudoku.Class
         }
         #endregion
 
+        private string Format(string w, char f, string r, string e, string q)
+        {
+            string s = w;
+
+            for (int i = 0; i < NumeroCelle; i++)
+            {
+                s += new string(f, NumeroCelle);
+
+                if (i < NumeroCelle - 1)
+                    if ((i + 1) % NumeroSuperCelle == 0)
+                        s += q;
+                    else
+                        s += r;
+            }
+
+            s += e;
+            s += "\n";
+
+            return s;
+        }
+
         public override string ToString()
         {
             string s = "";
 
-            for (int i = 0; i < NumeroCelle; i++)
+            s += Format("╔", '═', "╦", "╗", "╦");
+
+            for (int l = 0; l < NumeroSuperCelle; l++)
             {
-                for (int j = 0; j < NumeroCelle; j++)
-                    s += _matrix.OttieniCellaNonProtetta(i, j).FormattaInStringa(NumeroCelle) + " ";
-                s += "\n";
+                for (int i = 0; i < NumeroSuperCelle; i++)
+                {
+                    s += "║";
+                    for (int j = 0; j < NumeroSuperCelle; j++)
+                    {
+                        for (int p = 0; p < NumeroSuperCelle; p++)
+                        {
+                            int r = l * NumeroSuperCelle + j, c = i * NumeroSuperCelle + p;
+
+                            s += _matrix.OttieniCellaNonProtetta(r, c).FormattaInStringa(NumeroCelle);
+
+                            if (p < NumeroSuperCelle - 1)
+                                s += "│";
+                        }
+
+                        s += "║";
+                    }
+                    s += "\n";
+
+                    if (i < NumeroSuperCelle - 1)
+                        s += Format("╟", '─', "┼", "╢", "╬");
+                }
+                if (l < NumeroSuperCelle - 1)
+                    s += Format("╟", '═', "╬", "╢", "╬");
             }
+            s += Format("╚", '═', "╩", "╝", "╩");
 
             return s;
         }
