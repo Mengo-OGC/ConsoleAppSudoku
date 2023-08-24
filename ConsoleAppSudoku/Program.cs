@@ -41,28 +41,10 @@ namespace ConsoleAppSudoku
         {
             Title = TITOLO;
 
-            // DIMENSIONI
-            /*
-            //dimensioni sodoku
-            int d = 0;
-            bool ok = true;
-            do
-            {
-                Write(DIMENSIONI);
-                if (int.TryParse(ReadLine(), out d) && d > 0)
-                    ok = false;
-                else
-                    Write(ERRORE_DIMENSIONI);
-            } while (ok);
-
-            Sudoku sudoku = new Sudoku(d);
-            */
-
             Sudoku sudoku = new Sudoku();
 
-            //dimensioni sodoku
-            /*
             int n = 0;
+            bool ok = true;
             do
             {
                 Write("Numero celle note: ");
@@ -79,11 +61,11 @@ namespace ConsoleAppSudoku
                 int r = Conversione(RIGA, ERRORE_RIGA);
                 int c = Conversione(COLONNA, ERRORE_COLONNA);
                 
-                sudoku[r - 1, c - 1].Valore = num;
+                sudoku.AggiungiNumero(r, c, num);
             }
-            */
 
-            // todo: togliere, solo per test:
+            // test
+            /*
             sudoku.AggiungiNumero(1, 1, 5);
             sudoku.AggiungiNumero(1, 2, 3);
             sudoku.AggiungiNumero(1, 5, 7);
@@ -114,6 +96,7 @@ namespace ConsoleAppSudoku
             sudoku.AggiungiNumero(9,5 ,8 );
             sudoku.AggiungiNumero(9, 8, 7);
             sudoku.AggiungiNumero(9, 9, 9);
+            */
 
             DateTime inizio = DateTime.Now;
             sudoku.Risolvi();
