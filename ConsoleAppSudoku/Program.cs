@@ -43,6 +43,7 @@ namespace ConsoleAppSudoku
 
             Sudoku sudoku = new Sudoku();
 
+            /*
             int n = 0;
             bool ok = true;
             do
@@ -63,40 +64,39 @@ namespace ConsoleAppSudoku
                 
                 sudoku.AggiungiNumero(r, c, num);
             }
+            */
 
             // test
-            /*
-            sudoku.AggiungiNumero(1, 1, 5);
-            sudoku.AggiungiNumero(1, 2, 3);
-            sudoku.AggiungiNumero(1, 5, 7);
-            sudoku.AggiungiNumero(2, 1, 6);
-            sudoku.AggiungiNumero(2, 4, 1);
-            sudoku.AggiungiNumero(2, 5, 9);
-            sudoku.AggiungiNumero(2, 6, 5);
-            sudoku.AggiungiNumero(3, 2, 9);
-            sudoku.AggiungiNumero(3, 3,8 );
-            sudoku.AggiungiNumero(3, 8, 6);
-            sudoku.AggiungiNumero(4, 1,8 );
-            sudoku.AggiungiNumero(4, 5,6 );
-            sudoku.AggiungiNumero(4, 9,3 );
-            sudoku.AggiungiNumero(5,1 ,4 );
-            sudoku.AggiungiNumero(5, 4,8 );
-            sudoku.AggiungiNumero(5, 6,3 );
-            sudoku.AggiungiNumero(5, 9,1 );
-            sudoku.AggiungiNumero(6, 1,7 );
-            sudoku.AggiungiNumero(6, 5,2 );
-            sudoku.AggiungiNumero(6, 9,6 );
-            sudoku.AggiungiNumero(7, 2, 6);
-            sudoku.AggiungiNumero(7, 7,2 );
-            sudoku.AggiungiNumero(7, 8,8 );
-            sudoku.AggiungiNumero(8, 4, 4);
-            sudoku.AggiungiNumero(8, 5,1 );
-            sudoku.AggiungiNumero(8, 6, 9);
-            sudoku.AggiungiNumero(8, 9,5 );
-            sudoku.AggiungiNumero(9,5 ,8 );
-            sudoku.AggiungiNumero(9, 8, 7);
-            sudoku.AggiungiNumero(9, 9, 9);
-            */
+            sudoku.AggiungiNumero(1, 4, 7);
+            sudoku.AggiungiNumero(1, 5, 1);
+            sudoku.AggiungiNumero(2, 2, 2);
+            sudoku.AggiungiNumero(2, 6, 3);
+            sudoku.AggiungiNumero(3, 2,9 );
+            sudoku.AggiungiNumero(3, 4, 5);
+            sudoku.AggiungiNumero(3, 6, 2);
+            sudoku.AggiungiNumero(3, 8, 7);
+            sudoku.AggiungiNumero(3,9 ,3 );
+            sudoku.AggiungiNumero(4,8 , 6);
+            sudoku.AggiungiNumero(5, 1,6 );
+            sudoku.AggiungiNumero(5, 2,8 );
+            sudoku.AggiungiNumero(5, 5, 5);
+            sudoku.AggiungiNumero(5, 6,9 );
+            sudoku.AggiungiNumero(6, 1,2 );
+            sudoku.AggiungiNumero(6, 2,5 );
+            sudoku.AggiungiNumero(6, 3, 4);
+            sudoku.AggiungiNumero(6, 5,3 );
+            sudoku.AggiungiNumero(6, 6, 6);
+            sudoku.AggiungiNumero(6, 7,1 );
+            sudoku.AggiungiNumero(7,2 ,3 );
+            sudoku.AggiungiNumero(7,6 ,7 );
+            sudoku.AggiungiNumero(7, 9,9 );
+            sudoku.AggiungiNumero(8, 1,1 );
+            sudoku.AggiungiNumero(8,2, 6 );
+            sudoku.AggiungiNumero(8,6 ,5 );
+            sudoku.AggiungiNumero(9, 1,4 );
+            sudoku.AggiungiNumero(9, 2,7 );
+            sudoku.AggiungiNumero(9, 7,6 );
+            sudoku.AggiungiNumero(9, 8,8 );
 
             DateTime inizio = DateTime.Now;
             sudoku.Risolvi();

@@ -15,10 +15,10 @@ namespace ConsoleAppSudoku.Class
 
             for (int i = 0; i < Math.Pow(mat.GetLength(0), 2); i++)
             {
-                if (i != cell.Riga)
+                if (i != cell.Colonna)
                     mat.OttieniCellaNonProtetta(cell.Riga, i).Remove(cell.Valore);
 
-                if (i != cell.Colonna)
+                if (i != cell.Riga)
                     mat.OttieniCellaNonProtetta(i, cell.Colonna).Remove(cell.Valore);
             }
 
