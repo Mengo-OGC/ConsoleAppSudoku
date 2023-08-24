@@ -86,8 +86,8 @@ namespace ConsoleAppSudoku
             // todo: togliere, solo per test:
             sudoku.AggiungiNumero(1, 1, 5);
             sudoku.AggiungiNumero(1, 2, 3);
-            sudoku.AggiungiNumero(1, 5,7 );
-            sudoku.AggiungiNumero(2, 1,6 );
+            sudoku.AggiungiNumero(1, 5, 7);
+            sudoku.AggiungiNumero(2, 1, 6);
             sudoku.AggiungiNumero(2, 4, 1);
             sudoku.AggiungiNumero(2, 5, 9);
             sudoku.AggiungiNumero(2, 6, 5);

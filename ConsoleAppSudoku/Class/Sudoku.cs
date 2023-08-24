@@ -61,12 +61,6 @@ namespace ConsoleAppSudoku.Class
         }
         #endregion
 
-        public void Risolvi()
-        {
-            Riempi();
-            Semplifica();
-        }
-
         #region metodi
         public void AggiungiNumero(int r, int c, int val)
         {
@@ -75,6 +69,14 @@ namespace ConsoleAppSudoku.Class
 
             this[r / NumeroSuperCelle, c / NumeroSuperCelle][r % NumeroSuperCelle, c % NumeroSuperCelle].Valore = val;
         }
+
+        #region risoluzione
+        public void Risolvi()
+        {
+            //Riempi();
+            //Semplifica();
+        }
+
 
         private void Riempi()
         {
@@ -136,12 +138,12 @@ namespace ConsoleAppSudoku.Class
 
             s += Format("╔", '═', "╦", "╗", "╦");
 
-            for (int l = 0; l < NumeroSuperCelle; l++)
+            for (int l = 0; l < NumeroSuperCelle; l++) // righe esterne
             {
-                for (int i = 0; i < NumeroSuperCelle; i++)
+                for (int i = 0; i < NumeroSuperCelle; i++) // colonne esterne
                 {
                     s += "║";
-                    for (int j = 0; j < NumeroSuperCelle; j++)
+                    for (int j = 0; j < NumeroSuperCelle; j++) // 
                     {
                         for (int p = 0; p < NumeroSuperCelle; p++)
                         {
@@ -167,5 +169,7 @@ namespace ConsoleAppSudoku.Class
 
             return s;
         }
+
+        #endregion
     }
 }
