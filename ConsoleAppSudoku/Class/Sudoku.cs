@@ -73,7 +73,7 @@ namespace ConsoleAppSudoku.Class
         #region risoluzione
         public void Risolvi()
         {
-            //Riempi();
+            Riempi();
             //Semplifica();
         }
 
@@ -138,32 +138,25 @@ namespace ConsoleAppSudoku.Class
 
             s += Format("╔", '═', "╦", "╗", "╦");
 
-            for (int l = 0; l < NumeroSuperCelle; l++) // righe esterne
+            for (int r = 0; r < NumeroCelle; r++) // righe esterne
             {
-                for (int i = 0; i < NumeroSuperCelle; i++) // colonne esterne
+                s += "║";
+                for (int c = 0; c < NumeroCelle; c++)
                 {
-                    s += "║";
-                    for (int j = 0; j < NumeroSuperCelle; j++) // 
-                    {
-                        for (int p = 0; p < NumeroSuperCelle; p++)
-                        {
-                            int r = l * NumeroSuperCelle + j, c = i * NumeroSuperCelle + p;
-
-                            s += _matrix.OttieniCellaNonProtetta(r, c).FormattaInStringa(NumeroCelle);
-
-                            if (p < NumeroSuperCelle - 1)
-                                s += "│";
-                        }
-
+                    s += _matrix.OttieniCellaNonProtetta(r, c).FormattaInStringa(NumeroCelle);
+                    
+                    if ((c + 1) % NumeroSuperCelle == 0)
                         s += "║";
-                    }
-                    s += "\n";
-
-                    if (i < NumeroSuperCelle - 1)
-                        s += Format("╟", '─', "┼", "╢", "╬");
+                    else
+                        s += "│";
                 }
-                if (l < NumeroSuperCelle - 1)
-                    s += Format("╟", '═', "╬", "╢", "╬");
+                s += "\n";
+
+                if (r < NumeroCelle - 1)
+                    if ((r + 1) % NumeroSuperCelle == 0)
+                        s += Format("╟", '═', "╬", "╢", "╬");
+                    else
+                        s += Format("╟", '─', "┼", "╢", "╬");
             }
             s += Format("╚", '═', "╩", "╝", "╩");
 
