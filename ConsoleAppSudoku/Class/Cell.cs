@@ -28,14 +28,12 @@ namespace ConsoleAppSudoku.Class
 
         public void Remove()
         {
-            Remove(_valoriPossibili[0]);
+            Valore = _valoriPossibili[0];
+            _valoriPossibili.Clear();
         }
 
         public void Remove(int? val)
         {
-            if (NumeriPossibili == 1)
-                Valore = _valoriPossibili[0];
-
             _valoriPossibili.Remove(val);
         }
 

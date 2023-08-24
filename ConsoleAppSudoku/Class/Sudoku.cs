@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -103,7 +104,6 @@ namespace ConsoleAppSudoku.Class
                             continua++;
                         }
                     }
-
             } while (continua > 0);
         }
         #endregion

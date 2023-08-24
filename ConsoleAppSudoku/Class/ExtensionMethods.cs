@@ -22,15 +22,15 @@ namespace ConsoleAppSudoku.Class
                     mat.OttieniCellaNonProtetta(i, cell.Colonna).Remove(cell.Valore);
             }
 
-            mat.OttieniSperfCellaNonProtetta(cell.Riga, cell.Colonna).Clear(cell.Valore);
+            mat.OttieniSuperCellaNonProtetta(cell.Riga, cell.Colonna).Clear(cell.Valore);
         }
 
         public static void AssegnaNumeri(this SuperCell[,] mat, Cell cell, int n)
         {
-            int riga = cell.Riga / mat.GetLength(0);
-            int colonna = cell.Colonna / mat.GetLength(1);
-
-            if (ControlloAntiOrario(mat, cell, n) && mat[riga, colonna].Contains(n))
+            if (ControlloAntiOrario(mat, cell, n) 
+                && 
+                mat.OttieniSuperCellaNonProtetta(cell.Riga, cell.Colonna)
+                   .Contains(n))
                 cell.Add(n);
         }
 
@@ -106,7 +106,7 @@ namespace ConsoleAppSudoku.Class
             int n = mat.GetLength(0);
             return mat[r / n, c / n][r % n, c % n];
         }
-        public static SuperCell OttieniSperfCellaNonProtetta(this SuperCell[,] mat, int r, int c)
+        public static SuperCell OttieniSuperCellaNonProtetta(this SuperCell[,] mat, int r, int c)
         {
             int n = mat.GetLength(0);
             return mat[r / n, c / n];
