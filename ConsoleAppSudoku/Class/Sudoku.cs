@@ -103,6 +103,11 @@ namespace ConsoleAppSudoku.Class
                             _matrix.UnicizzaCella(c);
                             continua++;
                         }
+                        else if (c.NumeriPossibili > 1)
+                        {
+                            _matrix.ProvaUnicizzaCella(c);
+                            continua++;
+                        }
                     }
             } while (continua > 0);
         }

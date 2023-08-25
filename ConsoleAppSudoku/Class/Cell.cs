@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CodeDom;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleAppSudoku.Class
 {
-    public class Cell
+    public class Cell : IEnumerable<int>
     {
         private List<int?> _valoriPossibili = new List<int?>();
         public int? Valore { get; set; }
@@ -37,6 +38,12 @@ namespace ConsoleAppSudoku.Class
             _valoriPossibili.Remove(val);
         }
 
+        public void ValoreTrovato(int? i)
+        {
+            Valore = i;
+            _valoriPossibili.Clear();
+        }
+
         public string FormattaInStringa(int l)
         {
             string s;
@@ -49,6 +56,17 @@ namespace ConsoleAppSudoku.Class
                 s += " ";
 
             return s;
+        }
+
+        public IEnumerator<int> GetEnumerator()
+        {
+            foreach(int i in _valoriPossibili)
+                yield return i;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
         #endregion
 

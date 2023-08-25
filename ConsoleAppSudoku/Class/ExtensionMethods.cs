@@ -13,6 +13,13 @@ namespace ConsoleAppSudoku.Class
         {
             cell.Remove();
 
+            mat.LiberaRigaColonna(cell);
+
+            mat.OttieniSuperCellaNonProtetta(cell.Riga, cell.Colonna).Clear(cell.Valore);
+        }
+
+        private static void LiberaRigaColonna(this SuperCell[,] mat, Cell cell)
+        {
             for (int i = 0; i < Math.Pow(mat.GetLength(0), 2); i++)
             {
                 if (i != cell.Colonna)
@@ -21,8 +28,20 @@ namespace ConsoleAppSudoku.Class
                 if (i != cell.Riga)
                     mat.OttieniCellaNonProtetta(i, cell.Colonna).Remove(cell.Valore);
             }
+        }
 
-            mat.OttieniSuperCellaNonProtetta(cell.Riga, cell.Colonna).Clear(cell.Valore);
+        public static void ProvaUnicizzaCella(this SuperCell[,] mat, Cell cell)
+        {
+            int r = cell.Riga, c = cell.Colonna;
+            SuperCell superCell = mat.OttieniSuperCellaNonProtetta(r, c);
+
+            foreach (int i in cell)
+                if (superCell.ContainsTuttiEccetto(i, r, c))
+                {
+                    cell.ValoreTrovato(i);
+
+                    mat.LiberaRigaColonna(cell);
+                }
         }
 
         public static void AssegnaNumeri(this SuperCell[,] mat, Cell cell, int n)
@@ -30,7 +49,7 @@ namespace ConsoleAppSudoku.Class
             if (ControlloAntiOrario(mat, cell, n) 
                 && 
                 mat.OttieniSuperCellaNonProtetta(cell.Riga, cell.Colonna)
-                   .Contains(n))
+                   .ContainsNoti(n))
                 cell.Add(n);
         }
 
@@ -60,10 +79,18 @@ namespace ConsoleAppSudoku.Class
         }
 
         #region piccoli
-        public static bool Contains(this SuperCell mat, int v)
+        public static bool ContainsNoti(this SuperCell mat, int v)
         {
             foreach(Cell c in mat)
                 if (c.Valore == v) return false;
+            return true;
+        }
+
+        public static bool ContainsTuttiEccetto(this SuperCell mat, int? v, int r, int c)
+        {
+            foreach (Cell cell in mat)
+                if (cell.Contains(v) && cell.Riga != r && cell.Colonna != c)
+                    return false;
             return true;
         }
 
