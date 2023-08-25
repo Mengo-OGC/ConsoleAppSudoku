@@ -41,6 +41,8 @@ namespace ConsoleAppSudoku.Class
                     cell.ValoreTrovato(i);
 
                     mat.LiberaRigaColonna(cell);
+
+                    return;
                 }
         }
 
